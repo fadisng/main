@@ -86,6 +86,7 @@ __
 ... Example:
 __addTask s/Finish GUI c/06/10/2019 1600
 __
+
 . *Edit*
 .. Edit project: _edit_
 ... Edit the attributes of the project.
@@ -103,23 +104,6 @@ _editTask INDEX [s/DESCRIPTION] [c/TIME] [d/]_
 ... Example:
 _editTask 1 c/05/05/2019 d/_
 
-. *Meeting*
-.. Store meeting minutes: _attach_
-... Upload text file that contains the meeting minute for a specific meeting.
-... Format:
-__attach [mt/MEETING_INDEX] [dl/DEADLINE] [ta/TASKS] [t/TAG]...
-__
-
-.. Generate next meeting date: _generate_
-... Come up with next meeting date.
-... Format:
-__generateTiming [mt/MEETING_INDEX]
-__
-
-.. Send reminder: _Reminder_
-... Sends a reminder to all members of the current project.
-... Format: sendReminder
-
 
 . *Delete*
 .. Delete person: _delete_
@@ -136,6 +120,24 @@ __
 _deleteTask INDEX_
 ... Example:
 _delete 1_
+
+. *Meeting*
+
+.. Store meeting minutes: _attach_
+... Upload text file that contains the meeting minute for a specific meeting.
+... Format:
+__attach [mt/MEETING_INDEX] [dl/DEADLINE] [ta/TASKS] [t/TAG]...
+__
+
+.. Generate next meeting date: _generate_
+... Come up with next meeting date.
+... Format:
+__generateTiming [mt/MEETING_INDEX]
+__
+
+.. Send reminder: _Reminder_
+... Sends a reminder to all members of the current project.
+... Format: sendReminder
 
 . *Sort*
 
