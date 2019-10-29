@@ -6,9 +6,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.finance.Budget;
 import seedu.address.model.finance.Finance;
-import seedu.address.model.finance.Spending;
 import seedu.address.model.project.Project;
-import seedu.address.model.project.Task;
 import seedu.address.model.util.SortingOrder;
 
 import java.util.*;
@@ -56,23 +54,23 @@ public class SortSpendingCommand extends Command {
 
         switch (index.getOneBased()) {
 
-            case 1:
-                sortType = " alphabetical order.";
-                SortingOrder.setCurrentSpendingSortingOrderByAlphabeticalOrder();
-                break;
+        case 1:
+            sortType = " alphabetical order.";
+            SortingOrder.setCurrentSpendingSortingOrderByAlphabeticalOrder();
+            break;
 
-            case 2:
-                sortType = " increasing date/time.";
-                SortingOrder.setCurrentSpendingSortingOrderByDate();
-                break;
+        case 2:
+            sortType = " increasing date/time.";
+            SortingOrder.setCurrentSpendingSortingOrderByDate();
+            break;
 
-            case 5:
-                sortType = " increase expenses.";
-                SortingOrder.setCurrentSpendingSortingOrderByExpense();
-                break;
+        case 5:
+            sortType = " increase expenses.";
+            SortingOrder.setCurrentSpendingSortingOrderByExpense();
+            break;
 
-            default:
-                throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
+        default:
+            throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
         }
 
         List<Budget> budgetListToEdit = projectToEdit.getFinance().getBudgets();

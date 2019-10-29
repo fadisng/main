@@ -18,8 +18,8 @@ public class SortingOrder {
     private static Comparator<Spending> currentSortingOrderForSpending = Comparator.comparing(spending -> spending.getDate());
 
     public static void setCurrentTaskSortingOrderByAlphabeticalOrder() {
-        currentSortingOrderForTask = (task1, task2) -> task1.getDescription().description.
-                compareToIgnoreCase(task2.getDescription().description);
+        currentSortingOrderForTask = (task1, task2) -> task1.getDescription().description
+                .compareToIgnoreCase(task2.getDescription().description);
     }
 
     public static void setCurrentTaskSortingOrderByDate() {
