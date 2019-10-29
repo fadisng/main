@@ -58,13 +58,20 @@ public class ModelManager implements Model {
      * project.
      * @param project
      */
+    @Override
     public void setWorkingProject(Project project) {
         this.workingProject = Optional.of(project);
+    }
+
+    @Override
+    public void removeWorkingProject() {
+        this.workingProject = Optional.empty();
     }
 
     /**
      * @return An Optional object containing the working project.
      */
+    @Override
     public Optional<Project> getWorkingProject() {
         if (workingProject.isEmpty()) {
             return Optional.empty();
@@ -78,10 +85,6 @@ public class ModelManager implements Model {
      */
     public boolean isCheckedOut() {
         return workingProject.isPresent();
-    }
-
-    public String checkoutConstrain() {
-        return "Please checkout to a project before proceeding";
     }
 
     @Override

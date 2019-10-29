@@ -3,7 +3,11 @@ package seedu.address.model.project;
 import seedu.address.model.finance.Finance;
 import seedu.address.model.person.Person;
 
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
@@ -16,7 +20,6 @@ public class Project {
     // Identity fields
     private final Title title;
     private final Description description;
-
     private final List<String> members = new ArrayList<>();
     private final Finance finance;
     private final List<Task> tasks = new ArrayList<>();
@@ -91,12 +94,8 @@ public class Project {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getTitle())
-                .append(" Project Title: ")
-                .append(getTitle())
-                .append(" Description: ")
-                .append(getDescription())
-                .append(" Members:");
-
+                .append("\n")
+                .append(getDescription());
         for (String a : members) {
             builder.append(" " + a);
         }

@@ -24,6 +24,11 @@ public interface Model {
     void setWorkingProject(Project project);
 
     /**
+     * Remove the working project.
+     */
+    void removeWorkingProject();
+
+    /**
      * Get the current working project.
      */
     Optional<Project> getWorkingProject();
@@ -52,11 +57,6 @@ public interface Model {
      * Checks if the user performed checkout command before.
      */
     boolean isCheckedOut();
-
-    /**
-     * Give an error message to prompt the user to checkout to a project.
-     */
-    String checkoutConstrain();
 
     /**
      * Get list of members in current checked out project.

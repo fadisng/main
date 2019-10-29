@@ -13,9 +13,12 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.Logic;
+import seedu.address.logic.UiEvent;
 import seedu.address.logic.commands.*;
 import seedu.address.logic.commands.exceptions.CommandException;
+import static seedu.address.logic.commands.CheckoutCommand.MESSAGE_CHECKOUT_SUCCESS;
 
+import java.util.Optional;
 import java.util.logging.Logger;
 
 /**
@@ -32,11 +35,12 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     private State currentState = State.PROJECT_LIST;
-    private boolean onAddressBook = false;
 
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
+    private BudgetListPanel budgetListPanel;
     private ProjectListPanel projectListPanel;
+    private ProjectOverview projectOverview;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
 
@@ -50,16 +54,19 @@ public class MainWindow extends UiPart<Stage> {
     private VBox projectList;
 
     @FXML
+    private VBox budgetList;
+
+    @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane budgetListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
 
     @FXML
     private StackPane projectListPanelPlaceholder;
-
-    @FXML
-    private StackPane projectDisplayPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
@@ -77,6 +84,8 @@ public class MainWindow extends UiPart<Stage> {
         setAccelerators();
 
         helpWindow = new HelpWindow();
+
+        logic.addUiEvent(new UiEvent(State.PROJECT_LIST, Optional.empty()));
     }
 
     public Stage getPrimaryStage() {
@@ -174,8 +183,28 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.hide();
     }
 
-    public ProjectListPanel getProjectListPanel() {
-        return projectListPanel;
+    /**
+     * Display the previous Ui.
+     */
+    private void handleBack() throws CommandException, IllegalValueException {
+        UiEvent event = logic.getPreviousEvent();
+        if (event.getState() == State.PROJECT_LIST) {
+            if (!logic.getWorkingProject().isEmpty()) {
+                logic.removeWorkingProject();
+            }
+            currentState = State.PROJECT_LIST;
+            changeUiDisplay(State.PROJECT_LIST);
+            resultDisplay.setFeedbackToUser("You've checked out of the project!");
+        } else if (event.getState() == State.PROJECT_OVERVIEW) {
+            logic.setWorkingProject(logic.getFilteredProjectList().get(event.getProjectIndex().get()));
+            currentState = State.PROJECT_OVERVIEW;
+            resultDisplay.setFeedbackToUser(String.format(MESSAGE_CHECKOUT_SUCCESS, logic.getFilteredProjectList().get(event.getProjectIndex().get()).toString()));
+            changeUiDisplay(currentState);
+        } else {
+            logic.setWorkingProject(logic.getFilteredProjectList().get(event.getProjectIndex().get()));
+            currentState = event.getState();
+            changeUiDisplay(currentState);
+        }
     }
 
     /**
@@ -189,10 +218,18 @@ public class MainWindow extends UiPart<Stage> {
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
             String commandWord = commandResult.getCommandWord();
-            State nextState = stateOf(commandWord);
-
-            if (!nextState.equals(currentState)) {
+            // Only change Ui if certain command demands it
+            if (commandResult.changeNeeded()) {
+                State nextState = stateOf(commandWord);
+                int projectIndex = logic.getFilteredProjectList().indexOf(logic.getWorkingProject().get());
+                logic.addUiEvent(new UiEvent(nextState, Optional.of(projectIndex)));
                 changeUiDisplay(nextState);
+                currentState = nextState;
+            } else {
+                // if not needed refresh current page unless is back command
+                if (!commandWord.equals("back")) {
+                    changeUiDisplay(currentState);
+                }
             }
 
             if (commandResult.isShowHelp()) {
@@ -203,6 +240,10 @@ public class MainWindow extends UiPart<Stage> {
                 handleExit();
             }
 
+            if (commandResult.isBack()) {
+                handleBack();
+            }
+
             return commandResult;
         } catch (CommandException | IllegalValueException e) {
             logger.info("Invalid command: " + commandText);
@@ -210,11 +251,6 @@ public class MainWindow extends UiPart<Stage> {
             resultDisplay.setFeedbackToUser(e.getMessage());
             throw e;
         }
-    }
-
-    private enum State {
-        ADDRESS_BOOK,
-        PROJECT_LIST
     }
 
     private void changeUiDisplay(State nextState) {
@@ -227,7 +263,19 @@ public class MainWindow extends UiPart<Stage> {
 
         case PROJECT_LIST:
             projectListPanel = new ProjectListPanel(logic.getFilteredProjectList());
-            projectListPanelPlaceholder.getChildren().add(projectListPanel.getRoot());
+            projectListPanelPlaceholder.getChildren().setAll(projectListPanel.getRoot());
+            currentState = nextState;
+            break;
+
+        case PROJECT_OVERVIEW:
+            projectOverview = new ProjectOverview(logic.getFilteredProjectList(), logic.getWorkingProject().get());
+            projectListPanelPlaceholder.getChildren().setAll(projectOverview.getRoot());
+            currentState = nextState;
+            break;
+
+        case PROJECT_FINANCE:
+            budgetListPanel = new BudgetListPanel(logic.getWorkingProject().get().getFinance().getBudgetObservableList());
+            projectListPanelPlaceholder.getChildren().setAll(budgetListPanel.getRoot());
             currentState = nextState;
             break;
 
@@ -239,51 +287,21 @@ public class MainWindow extends UiPart<Stage> {
     private State stateOf(String commandWord) {
         State state = State.PROJECT_LIST;
         switch (commandWord) {
-        case AddBudgetCommand.COMMAND_WORD:
-
-        case AddFromContactsCommand.COMMAND_WORD:
-
-        case AddMemberCommand.COMMAND_WORD:
-
         case AddProjectCommand.COMMAND_WORD:
-
-        case AddProjectMeetingCommand.COMMAND_WORD:
-
-        case AddSpendingCommand.COMMAND_WORD:
-
-        case AddTaskCommand.COMMAND_WORD:
-
-        case CheckoutCommand.COMMAND_WORD:
-
-        case DeleteTaskCommand.COMMAND_WORD:
-
-        case ExitCommand.COMMAND_WORD:
-
-        case GenerateSlotCommand.COMMAND_WORD:
-
-        case ListBudgetCommand.COMMAND_WORD:
-
-        case RemoveMemberCommand.COMMAND_WORD:
             state = State.PROJECT_LIST;
             break;
 
-        case AddCommand.COMMAND_WORD:
+        case GenerateSlotCommand.COMMAND_WORD:
 
-        case AddProfilePictureCommand.COMMAND_WORD:
+        case CheckoutCommand.COMMAND_WORD:
+            state = State.PROJECT_OVERVIEW;
+            break;
 
-        case ClearCommand.COMMAND_WORD:
-
-        case DeleteCommand.COMMAND_WORD:
-
-        case EditCommand.COMMAND_WORD:
-
-        case FindCommand.COMMAND_WORD:
-
-        case HelpCommand.COMMAND_WORD:
+        case ListBudgetCommand.COMMAND_WORD:
+            state = State.PROJECT_FINANCE;
+            break;
 
         case ListCommand.COMMAND_WORD:
-
-        case AddTimetableCommand.COMMAND_WORD:
             state = State.ADDRESS_BOOK;
             break;
 

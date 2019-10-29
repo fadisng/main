@@ -6,6 +6,8 @@ import seedu.address.model.Model;
 import seedu.address.model.finance.Budget;
 import seedu.address.model.finance.Finance;
 import seedu.address.model.project.Project;
+import static seedu.address.commons.core.Messages.MESSAGE_NOT_CHECKED_OUT;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PROJECTS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,7 @@ public class AddBudgetCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add a budget type to the project"
             + "[" + PREFIX_BUDGET + "BUDGET]...\n"
             + "Example: " + COMMAND_WORD
-            + PREFIX_BUDGET + "equipment $3000.00";
+            + PREFIX_BUDGET + " equipment $3000.00";
     public static final String MESSAGE_SUCCESS = "New budgets added";
 
     public AddBudgetCommand(List<Budget> bugets) {
@@ -37,7 +39,7 @@ public class AddBudgetCommand extends Command {
         requireNonNull(model);
 
         if (!model.isCheckedOut()) {
-            throw new CommandException(model.checkoutConstrain());
+            throw new CommandException(MESSAGE_NOT_CHECKED_OUT);
         }
 
         Project currWorkingProject = model.getWorkingProject().get();
@@ -52,6 +54,7 @@ public class AddBudgetCommand extends Command {
 
         model.setWorkingProject(editedProject);
         model.setProject(currWorkingProject, editedProject);
+        model.updateFilteredProjectList(PREDICATE_SHOW_ALL_PROJECTS);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS), COMMAND_WORD);
     }

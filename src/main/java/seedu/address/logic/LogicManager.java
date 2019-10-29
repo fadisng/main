@@ -1,5 +1,10 @@
 package seedu.address.logic;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.Optional;
+import java.util.Stack;
+import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
@@ -16,9 +21,6 @@ import seedu.address.model.project.Project;
 import seedu.address.storage.Storage;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.logging.Logger;
 
 /**
  * The main LogicManager of the app.
@@ -30,6 +32,8 @@ public class LogicManager implements Logic {
     private final Model model;
     private final Storage storage;
     private final AddressBookParser addressBookParser;
+    // Stores all the changes in Ui display
+    private Stack<UiEvent> viewHistory = new Stack<>();
 
     public LogicManager(Model model, Storage storage) {
         this.model = model;
@@ -107,7 +111,38 @@ public class LogicManager implements Logic {
         return model.getProjectListFilePath();
     }
 
+    @Override
+    public Optional<Project> getWorkingProject() {
+        return model.getWorkingProject();
+    }
+
+    @Override
+    public void removeWorkingProject() {
+        model.removeWorkingProject();
+    }
+
+    @Override
+    public void setWorkingProject(Project project) {
+        model.setWorkingProject(project);
+    }
+
     //======== GUI =======================================================================
+
+    @Override
+    public void addUiEvent(UiEvent event) {
+        this.viewHistory.push(event);
+    }
+
+    @Override
+    public UiEvent getPreviousEvent() {
+        viewHistory.pop();
+        return viewHistory.peek();
+    }
+
+    @Override
+    public void eraseHistory() {
+        viewHistory = new Stack<>();
+    }
 
     @Override
     public GuiSettings getGuiSettings() {

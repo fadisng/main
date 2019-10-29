@@ -1,5 +1,7 @@
 package seedu.address.logic;
 
+import java.nio.file.Path;
+import java.util.Optional;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -12,7 +14,6 @@ import seedu.address.model.person.Person;
 import seedu.address.model.project.Project;
 
 import java.io.File;
-import java.nio.file.Path;
 
 /**
  * API of the Logic component
@@ -61,7 +62,37 @@ public interface Logic {
      */
     Path getProjectListFilePath();
 
+    /**
+     * Returns an Optional<Project> which is the current working project.
+     */
+    Optional<Project> getWorkingProject();
+
+    /**
+     * Remove the working project.
+     */
+    void removeWorkingProject();
+
+    /**
+     * Sets the working project.
+     */
+    void setWorkingProject(Project project);
+
     //======== GUI =======================================================================
+
+    /**
+     * Add a view history.
+     */
+    public void addUiEvent(UiEvent event);
+
+    /**
+     * Get the previous history.
+     */
+    public UiEvent getPreviousEvent();
+
+    /**
+     * Reset the view history because some condition is triggered.
+     */
+    public void eraseHistory();
 
     /**
      * Returns the user prefs' GUI settings.
