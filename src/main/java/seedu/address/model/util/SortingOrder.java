@@ -1,5 +1,6 @@
 package seedu.address.model.util;
 
+import seedu.address.model.person.Person;
 import seedu.address.model.project.Task;
 
 import java.util.Comparator;
@@ -11,6 +12,8 @@ import java.util.Comparator;
 public class SortingOrder {
 
     private static Comparator<Task> currentSortingOrderForTask = Comparator.comparing(task -> task.getTime().getDate());
+    private static Comparator<String> currentSortingOrderForMember = Comparator.comparing(String::toString);
+    private static Comparator<Person> currentSortingOrderForPerson = Comparator.comparing(person -> person.getName().fullName);
 
     public static void setCurrentSortingOrderByAlphabeticalOrder() {
         currentSortingOrderForTask = Comparator.comparing(task -> task.getDescription().description);
@@ -36,5 +39,13 @@ public class SortingOrder {
 
     public static Comparator<Task> getCurrentSortingOrderForTask() {
         return currentSortingOrderForTask;
+    }
+
+    public static Comparator<String> getCurrentSortingOrderForMember() {
+        return currentSortingOrderForMember;
+    }
+
+    public static Comparator<Person> getCurrentSortingOrderForPerson() {
+        return currentSortingOrderForPerson;
     }
 }

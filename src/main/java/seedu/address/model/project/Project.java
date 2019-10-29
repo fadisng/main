@@ -95,10 +95,10 @@ public class Project {
                 .append(getTitle())
                 .append(" Description: ")
                 .append(getDescription())
-                .append(" Members: ");
+                .append(" Members:");
 
         for (String a : members) {
-            builder.append(a + ",");
+            builder.append(" " + a);
         }
         return builder.toString();
     }
