@@ -8,7 +8,6 @@ import seedu.address.model.project.Project;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_NOT_CHECKED_OUT;

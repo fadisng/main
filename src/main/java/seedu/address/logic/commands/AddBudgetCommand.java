@@ -19,7 +19,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PROJECTS;
  * Adds a budget type to the project.
  */
 
-public class    AddBudgetCommand extends Command {
+public class AddBudgetCommand extends Command {
 
     private final List<Budget> budgets = new ArrayList<>();
     public static final String COMMAND_WORD = "addBudget";
