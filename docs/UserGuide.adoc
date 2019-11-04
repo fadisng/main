@@ -138,7 +138,11 @@ Example:
 
 [TIP]
 Whenever you add a time with the prefix c/, the format should be dd/MM/yyyy HHmm,
-whereby the year should be between 1900 to 2100 and the time should be between 0000 to 2359.
+whereby the year must be between 1900 to 2100 and the time must be between 0000 to 2359.
+
+[CAUTION]
+MyProject does not check for invalid days such as 30th February so do ensure you input
+your dates correctly!
 
 ==== 6. Add a project meeting: `addProjectMeeting`
 
