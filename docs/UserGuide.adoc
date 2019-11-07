@@ -24,7 +24,7 @@ Interested? Jump to the Section 2, “QuickStart” to get started. Enjoy!
 
 === Viewing help: `help`
 
-Shows a list of commands. +
+Provides a url to this user guide for a more comprehensive list and explanation for each command. +
 Format: `help` +
 
 === Listing Information
