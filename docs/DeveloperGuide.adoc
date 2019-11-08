@@ -235,9 +235,34 @@ image::CommitActivityDiagram.png[]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
+=== Task feature
+==== Description of feature
+Within every project, there are tasks to be done or milestones to be achieved within certain deadlines. The diagram below shows the class diagram of the task class and how it interacts with the model.
+
+.Class Diagram for Task
+
+image::TaskClassDiagram.png[]
+
+As shown above, each project stores multiple tasks in a list. These tasks can be stored, deleted, edited and sorted very easily.
+Here are some task related commands that can be executed by the app.
+
+. addTask - adds a task into the project model.
+. deleteTask - removes a task from the project model based on index specified by user
+. editTask - edits a task of the given index with attribute/s to edit e.g deadline/description/whether is done
+. sortTask - sorts the list of tasks based on specification given by user. (more info available in section 3.3)
+
+==== Details
+As seen in figure 9, each task consists of 3 parameters namely description, time and a boolean state to show whether the task is done/in progress.
+A typical task will look like this on the app: +
+
+image::TASK.png[]
+
+
+
 === Sorting feature
 ==== Description of feature
 
+Sorts some lists based on specifications provided by the user.
 There are 2 lists that are able to be sorted so far. +
 
 . Sort list of tasks
@@ -256,7 +281,7 @@ Currently there are 5 different methods to sort the lists.
 
 [NOTE]
 
-Methods 3-4 are only for sorting tasks wheres method 5 is for sort spending.
+Methods 3-4 are only for sorting tasks whereas method 5 is for sort spending.
 Methods 1-2 can be used to sort both lists.
 
 ==== Details
@@ -271,11 +296,11 @@ and updating the current sort order in `SortingOrder` class.
 .Sequence Diagram for sortTask
 image::SortTaskSequenceDiagram.png[]
 
-These are the stages shown in figure 9. Stages are similar to sort spending as well.
+These are the stages shown in figure 9. Stages are similar for sort spending as well.
 
 . Parses the input to obtain the index.
 . Goes to `SortingOrder` to change the current sorting order to the one linked to the given index based on the specification shown above.
-. Obtains list of tasks from model and sorts it.
+. Obtains list of tasks from model and sorts it. List now maintains this sorting order and displays a sorted list even after adding or editing elements.
 . Display the newly sorted task list.
 
 ==== Design considerations
@@ -283,7 +308,7 @@ These are the stages shown in figure 9. Stages are similar to sort spending as w
 ===== Aspect: Data structure to support the sort commands
 
 
-* **Alternative 1 (current choice):** Store the data a in list.
+* **Alternative 1 (current choice):** Store the data in list.
 ** Pros: Easy to implement. Easy for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.
 ** Cons: May have performance issues as list has to be sorted every time a new element is added or edited.
 * **Alternative 2:** Store the data in a PriorityQueue.
@@ -298,11 +323,11 @@ no additional sorting needed when adding or editing new elements.
 The timeslot generator is used to suggest meeting timings by making use of team members' timetable.
 
 [NOTE]
-This feature makes heavy use of the class `TimeRange`, which represents a period of time in a week, e.g. Monday 1000 -- Monday 1200.
+This feature makes heavy use of the class `TimeRange`, which represents a period of time in a week, e.g. MONDAY 1000 -- MONDAY 1200.
 
 The main logic of this feature is contained within the `TimeSlotGenerator` class:
 
-TimeSlotGenerator(members, desiredMeetingDuration, restrictedTimeRange)`
+`TimeSlotGenerator(members, desiredMeetingDuration, restrictedTimeRange)`
 
 * `members`: `List<TimeTable>` of members of the checked-out `Project`
 * `desiredMeetingDuration`: How long the meeting would last in hour, expressed as a positive integer
@@ -338,14 +363,12 @@ If `generate()` returns an empty `List<TimeRange>`, the program should automatic
 
 The following activity diagram summarizes the general flow of the command `generate`:
 
-.`Generate` command tries to provide best possible meeting timeslot
+.`generate` command tries to provide best possible meeting timeslot
 image::GenerateSlotActivityDiagram.png[]
 
 ==== Algorithm Used
 
 ===== `TimeSlotGenerator#generate()`
-
-This algorithm goes through several stages:
 
 . Combine all the given `TimeTable` into a single `List<TimeRange> combined`
 . `combined` is then processed further by merging overlapping `TimeRange` into a single `TimeRange`. E.g. `TimeRange(MONDAY, 1000, MONDAY, 1200)` and `TimeRange(MONDAY, 1200, MONDAY,1400)` are merged together to form a single `TimeRange(MONDAY, 1000, MONDAY, 1400)`. `List<TimeRange> merged` is then passed on to the next stage.

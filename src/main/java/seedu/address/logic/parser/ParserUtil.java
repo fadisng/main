@@ -29,7 +29,7 @@ import seedu.address.model.timetable.TimeRange;
 import java.util.List;
 import java.util.Date;
 import java.util.ArrayList;
-import seedu.address.model.timetable.TimeTable;
+import seedu.address.model.timetable.Timetable;
 
 import static seedu.address.model.finance.Spending.DATE_FORMAT;
 
@@ -246,9 +246,12 @@ public class ParserUtil {
     }
 
     /**
-     *
+     * Parse newline separated TimeRanges, return their Timetable representation
+     * @param timeTableString Newline separated TimeRanges
+     * @return Timetable representation of the TimeRanges
+     * @throws ParseException
      */
-    public static TimeTable parseTimeTable(String timeTableString) throws ParseException {
+    public static Timetable parseTimeTable(String timeTableString) throws ParseException {
         String[] splitted = timeTableString.split("\n");
         List<TimeRange> timeRanges = new ArrayList<>();
         for (String s : splitted) {
@@ -258,7 +261,7 @@ public class ParserUtil {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TimeRange.MESSAGE_CONSTRAINTS));
             }
         }
-        return new TimeTable(timeRanges);
+        return new Timetable(timeRanges);
     }
 
     /**

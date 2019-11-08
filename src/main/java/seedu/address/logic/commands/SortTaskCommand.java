@@ -30,6 +30,7 @@ public class SortTaskCommand extends Command {
 
 
     public static final String MESSAGE_SORT_TASK_SUCCESS = "Tasks sorted by%1$s";
+    public static final String MESSAGE_SAME_INDEX = "Tasks already sorted in this order! Select a different ordering.";
 
 
     public final Index index;
@@ -49,12 +50,16 @@ public class SortTaskCommand extends Command {
             throw new CommandException(MESSAGE_NOT_CHECKED_OUT);
         }
 
+        int num = index.getOneBased();
+        if (num == SortingOrder.taskCurrentIndex) {
+            throw new CommandException(MESSAGE_SAME_INDEX);
+        }
         Project projectToEdit = model.getWorkingProject().get();
         List<String> members = projectToEdit.getMemberNames();
         List<Task> tasks = projectToEdit.getTasks();
         String sortType = "";
 
-        switch (index.getOneBased()) {
+        switch (num) {
 
         case 1:
             sortType = " alphabetical order.";
@@ -85,7 +90,7 @@ public class SortTaskCommand extends Command {
         sortTask(taskList, SortingOrder.getCurrentSortingOrderForTask());
         Finance finance = projectToEdit.getFinance();
 
-        Project editedProject = new Project(projectToEdit.getTitle(), projectToEdit.getDescription(), new ArrayList<String>(), taskList, finance);
+        Project editedProject = new Project(projectToEdit.getTitle(), projectToEdit.getDescription(), new ArrayList<String>(), taskList, finance, projectToEdit.getGeneratedTimetable());
         editedProject.getMemberNames().addAll(members);
 
 
