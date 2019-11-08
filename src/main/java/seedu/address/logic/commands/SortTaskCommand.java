@@ -51,7 +51,7 @@ public class SortTaskCommand extends Command {
         }
 
         int num = index.getOneBased();
-        if (num == SortingOrder.taskCurrentIndex) {
+        if (num == SortingOrder.getTaskCurrentIndex()) {
             throw new CommandException(MESSAGE_SAME_INDEX);
         }
         Project projectToEdit = model.getWorkingProject().get();

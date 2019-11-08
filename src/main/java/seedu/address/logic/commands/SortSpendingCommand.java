@@ -50,7 +50,7 @@ public class SortSpendingCommand extends Command {
         }
 
         int num = index.getOneBased();
-        if (num == SortingOrder.spendingCurrentIndex) {
+        if (num == SortingOrder.getSpendingCurrentIndex()) {
             throw new CommandException(MESSAGE_SAME_INDEX);
         }
 

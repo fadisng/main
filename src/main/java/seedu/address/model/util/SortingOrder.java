@@ -16,8 +16,8 @@ public class SortingOrder {
     private static Comparator<String> currentSortingOrderForMember = Comparator.comparing(String::toString);
     private static Comparator<Person> currentSortingOrderForPerson = Comparator.comparing(person -> person.getName().fullName);
     private static Comparator<Spending> currentSortingOrderForSpending = Comparator.comparing(spending -> spending.getDate());
-    public static int taskCurrentIndex = 4;
-    public static int spendingCurrentIndex = 2;
+    private static int taskCurrentIndex = 4;
+    private static int spendingCurrentIndex = 2;
 
     public static void setCurrentTaskSortingOrderByAlphabeticalOrder() {
         currentSortingOrderForTask = (task1, task2) -> task1.getDescription().description
@@ -76,5 +76,13 @@ public class SortingOrder {
 
     public static Comparator<Spending> getCurrentSortingOrderForSpending() {
         return currentSortingOrderForSpending;
+    }
+
+    public static int getTaskCurrentIndex() {
+        return taskCurrentIndex;
+    }
+
+    public static int getSpendingCurrentIndex() {
+        return spendingCurrentIndex;
     }
 }
