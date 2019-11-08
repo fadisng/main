@@ -29,7 +29,8 @@ MP is optimized for those who prefer to work with a Command Line Interface (CLI)
 while still having the benefits of a Graphical User Interface (GUI).
 With MP it is a one-stop app to store and manage your projects and their relevant information,
 this is especially useful if you are always managing multiple projects across different teams.
-MP has unique functions such as sending emails to members within the app and finance tracking capabilities etc.
+MP has unique functions such as sending emails to members within the app and financial tracking capabilities etc.
+Currently our app is optimized  for students to use but we intend to expand further to working adults as well.
 
 Interested? Jump to the Section 2, “QuickStart” to get started. Enjoy!
 
@@ -122,11 +123,11 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 
-
-==== Add a member to your project
+=====  Add a member to your project
 
 Adding a member can be done in 2 ways, you can either add a new person to your contacts and to your current project,
 or you can simply add an existing person from your contacts to your current project.
+
 
 ====== 1. Add a new member: `addMember` [Checkout]
 
@@ -147,7 +148,6 @@ Example:
 
 
 ====== 2. Add from your contacts: `addFromContacts` [Checkout]
-
 
 This command helps to add a person you already saved in your contacts into your project, reducing the need
 to type his information all over again. All you need to do is enter the index he is listed at. +
@@ -393,7 +393,6 @@ associated with this functionality.
 
 ==== Generate meeting timing: `generate` [Checkout]
 
-
 Generates possible meeting timeslots where all member are available.
 
 Need to decide on a meeting timing, but having trouble finding a time where all members are free? This command can help suggest meeting timings!
@@ -409,7 +408,6 @@ Example:
 
 * `generate d/2 r/MONDAY 0900 MONDAY 1800` +
 Generates all possible meeting timeslots that lasts at least 2 hours, within the time frame of Monday 9am to Monday 6pm.
-
 
 Below is a step-by-step instruction to guide you through generating a meeting timeslot that lasts for 2 hours, between Monday 1000 to Monday 1800:
 
