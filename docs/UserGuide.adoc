@@ -548,3 +548,14 @@ Format: `sortSpending INDEX`
 Example:
 
 * `sortSpending 5` (Sorts the spending by increasing prices)
+
+==== Sort meeting: `sortMeeting` [Checkout]
+Sorts the meetings in the meeting list of the current working project based on given specification. The implementation is
+exactly the same as sortTask. Refer to the sortTask section for a more detailed explanation. +
+Format: `sortMeeting INDEX`
+
+`INDEX` in this case refers to which type of sorting you want to do. In this case, only integers 1 and 2 are applicable.(Refer to the highlighted section above)
+
+Example:
+
+* `sortMeeting 1` (Sorts the meetings by alphabetical order)
