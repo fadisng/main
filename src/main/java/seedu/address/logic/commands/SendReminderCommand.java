@@ -63,7 +63,6 @@ public class SendReminderCommand extends Command {
         Project project = model.getWorkingProject().get();
 
         //getting list of meetings and tasks
-//        Set<Meeting> meetingSet = project.getListOfMeeting();
         List<Meeting> meetingList = project.getListOfMeeting();
         List<Task> taskList = project.getTasks();
 

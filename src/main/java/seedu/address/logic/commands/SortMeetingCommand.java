@@ -26,7 +26,7 @@ public class SortMeetingCommand extends Command {
             + LIST_VALID_INDEX + "\n"
             + "Parameters: INDEX (must be a positive integer between 1-2)\n"
             + "Example: " + COMMAND_WORD + " 1";
-    public static final String MESSAGE_SORT_Meeting_SUCCESS = "Meetings sorted by%1$s";
+    public static final String MESSAGE_SORT_MEETING_SUCCESS = "Meetings sorted by%1$s";
     public static final String MESSAGE_SAME_INDEX = "Meetings already sorted in this order! Select a different ordering. Here's the list of sorting orders.\n"
             + LIST_VALID_INDEX;
 
@@ -54,24 +54,23 @@ public class SortMeetingCommand extends Command {
         }
         Project projectToEdit = model.getWorkingProject().get();
         List<String> members = projectToEdit.getMemberNames();
-        List<Meeting> meetings= projectToEdit.getListOfMeeting();
+        List<Meeting> meetings = projectToEdit.getListOfMeeting();
         String sortType = "";
 
 
         switch (num) {
+        case 1:
+            sortType = " alphabetical order.";
+            SortingOrder.setCurrentMeetingSortingOrderByAlphabeticalOrder();
+            break;
 
-            case 1:
-                sortType = " alphabetical order.";
-                SortingOrder.setCurrentMeetingSortingOrderByAlphabeticalOrder();
-                break;
+        case 2:
+            sortType = " increasing date/time.";
+            SortingOrder.setCurrentMeetingSortingOrderByDate();
+            break;
 
-            case 2:
-                sortType = " increasing date/time.";
-                SortingOrder.setCurrentMeetingSortingOrderByDate();
-                break;
-
-            default:
-                throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
+        default:
+            throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
         }
 
         List<Meeting> meetingList = new ArrayList<>();
@@ -86,7 +85,7 @@ public class SortMeetingCommand extends Command {
 
         model.setProject(projectToEdit, editedProject);
         model.updateFilteredProjectList(PREDICATE_SHOW_ALL_PROJECTS);
-        return new CommandResult(String.format(MESSAGE_SORT_Meeting_SUCCESS, sortType), COMMAND_WORD);
+        return new CommandResult(String.format(MESSAGE_SORT_MEETING_SUCCESS, sortType), COMMAND_WORD);
     }
 
     public void sortMeeting(List<Meeting> list, Comparator<Meeting> meetingComparator) {

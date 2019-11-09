@@ -21,7 +21,6 @@ import seedu.address.model.util.SortingOrder;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -79,7 +78,7 @@ public class ProjectOverview extends UiPart<Region> {
         memberTitle.setText("Members: ");
         members.setOrientation(Orientation.VERTICAL);
         members.setPrefWrapLength(100);
-        Collections.sort(project.getMemberNames(),SortingOrder.getCurrentSortingOrderForMember());
+        Collections.sort(project.getMemberNames(), SortingOrder.getCurrentSortingOrderForMember());
         Collections.sort(project.getTasks(), SortingOrder.getCurrentSortingOrderForTask());
         for (String member : project.getMemberNames()) {
             members.getChildren().add(new Label("    " + ++memberCount + ". " + member));
