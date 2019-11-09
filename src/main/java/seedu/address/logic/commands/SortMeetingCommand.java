@@ -18,24 +18,22 @@ import static seedu.address.commons.core.Messages.MESSAGE_NOT_CHECKED_OUT;
 /**
  * Sorts the tasks in the current project.
  */
-public class SortTaskCommand extends Command {
-    public static final String COMMAND_WORD = "sortTask";
+public class SortMeetingCommand extends Command {
+    public static final String COMMAND_WORD = "sortMeeting";
     public static final String LIST_VALID_INDEX = "1 - Sorts by alphabetical order.\n"
-            + "2 - Sorts by increasing date/time.\n"
-            + "3 - Sorts by whether tasks are done.\n"
-            + "4 - Sorts by whether tasks are done and then by increasing date/time.";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts the task from the current project according to given index.\n"
+            + "2 - Sorts by increasing date/time.\n";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts the meetings from the current project according to given index.\n"
             + LIST_VALID_INDEX + "\n"
-            + "Parameters: INDEX (must be a positive integer between 1-4)\n"
+            + "Parameters: INDEX (must be a positive integer between 1-2)\n"
             + "Example: " + COMMAND_WORD + " 1";
-    public static final String MESSAGE_SORT_TASK_SUCCESS = "Tasks sorted by%1$s";
-    public static final String MESSAGE_SAME_INDEX = "Tasks already sorted in this order! Select a different ordering. Here's the list of sorting orders.\n"
+    public static final String MESSAGE_SORT_TASK_SUCCESS = "Meetings sorted by%1$s";
+    public static final String MESSAGE_SAME_INDEX = "Meetings already sorted in this order! Select a different ordering. Here's the list of sorting orders.\n"
             + LIST_VALID_INDEX;
 
 
     public final Index index;
 
-    public SortTaskCommand(Index index) {
+    public SortMeetingCommand(Index index) {
         requireNonNull(index);
         this.index = index;
     }
@@ -51,7 +49,7 @@ public class SortTaskCommand extends Command {
         }
 
         int num = index.getOneBased();
-        if (num == SortingOrder.getTaskCurrentIndex()) {
+        if (num == SortingOrder.getMeetingCurrentIndex()) {
             throw new CommandException(MESSAGE_SAME_INDEX);
         }
         Project projectToEdit = model.getWorkingProject().get();
@@ -62,28 +60,18 @@ public class SortTaskCommand extends Command {
 
         switch (num) {
 
-        case 1:
-            sortType = " alphabetical order.";
-            SortingOrder.setCurrentTaskSortingOrderByAlphabeticalOrder();
-            break;
+            case 1:
+                sortType = " alphabetical order.";
+                SortingOrder.setCurrentMeetingSortingOrderByAlphabeticalOrder();
+                break;
 
-        case 2:
-            sortType = " increasing date/time.";
-            SortingOrder.setCurrentTaskSortingOrderByDate();
-            break;
+            case 2:
+                sortType = " increasing date/time.";
+                SortingOrder.setCurrentMeetingSortingOrderByDate();
+                break;
 
-        case 3:
-            sortType = " whether tasks are done.";
-            SortingOrder.setCurrentTaskSortingOrderByDone();
-            break;
-
-        case 4:
-            sortType = " whether tasks are done and then by increasing date/time.";
-            SortingOrder.setCurrentTaskSortingOrderByDoneThenDate();
-            break;
-
-        default:
-            throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
+            default:
+                throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
         }
 
         ArrayList<Task> taskList = new ArrayList<>();
