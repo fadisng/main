@@ -25,7 +25,7 @@ public class Project {
     private final Finance finance;
     private final List<Task> tasks = new ArrayList<>();
     private final Timetable generatedTimetable;
-    private Set<Meeting> meeting = new HashSet<>();
+    private List<Meeting> meeting = new ArrayList<>();
 
     public Project(Title name, Description description, List<String> members, List<Task> tasks, Finance finance, Timetable generatedTimetable) {
 
@@ -46,11 +46,11 @@ public class Project {
         return description;
     }
 
-    public Set<Meeting> getListOfMeeting() {
+    public List<Meeting> getListOfMeeting() {
         return meeting;
     }
 
-    public void setListOfMeeting(Set<Meeting> meetings) {
+    public void setListOfMeeting(List<Meeting> meetings) {
         this.meeting.addAll(meetings);
     }
 

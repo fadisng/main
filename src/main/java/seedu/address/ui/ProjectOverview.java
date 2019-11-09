@@ -134,7 +134,7 @@ public class ProjectOverview extends UiPart<Region> {
         meetings.setPrefWrapLength(100);
         List<Meeting> listOfMeetings = new ArrayList<Meeting>(project.getListOfMeeting());
         int meetingCount = 1;
-        listOfMeetings.sort(Comparator.comparing(m -> m.getTime().getDate()));
+        Collections.sort(listOfMeetings, SortingOrder.getCurrentSortingOrderForMeeting());
         for (Meeting meeting: listOfMeetings) {
             meetings.getChildren().add(new Label("    " + meetingCount++ + ". " + meeting.getDescription().description + " on " + meeting.getTime().time));
         }
