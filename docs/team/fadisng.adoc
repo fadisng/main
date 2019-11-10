@@ -1,11 +1,5 @@
 = Fadi Sng - Project Portfolio
 :imagesDir: ../images
-:stylesDir: stylesheets
-ifdef::env-github[]
-:tip-caption: :bulb:
-:note-caption: :information_source:
-:warning-caption: :warning:
-endif::[]
 
 == PROJECT: MyProject
 
