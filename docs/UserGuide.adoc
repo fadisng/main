@@ -45,6 +45,9 @@ Interested? Jump to the Section 2, “QuickStart” to get started. Enjoy!
 .. exit : exits the app
 . Refer to Section 3, “Features” for details of each command.
 
+[WARNING]
+Please do not modify the data file or corrupt it in any way. MyProject will not work as intended if you do!
+
 .The home page of MyProject listing all the projects you have
 image::home-page.png[]
 
