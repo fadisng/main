@@ -249,7 +249,7 @@ no additional sorting needed when adding or editing new elements.
 
 == Conclusion/Reflection
 
-= Takeaways
+=== Takeaways
 
 Shown below is the list of takeaways from this project:
 
