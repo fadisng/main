@@ -9,7 +9,7 @@
 == Background
 My team consists of a group of 5 NUS computer science students working on this project as part of a software engineering project.
 The task was to enhance a basic Command Line Interface(CLI) addressbook app into an app that suits the needs of a target group of people.
-We decided to morph it into a project management app for students as it was something closer to us and we could
+We decided to morph it into a project management app for students as it is more relatable and we could
 make changes based on our own personal needs as students which are representative of the target group. Our app,
 _MyProject_ is for students, by students.
 
